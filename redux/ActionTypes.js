@@ -17,3 +17,7 @@ export const ADD_FAVORITE = 'ADD_FAVORITE';
 
 //added action type ADD_COMMENT
 export const ADD_COMMENT = 'ADD_COMMENT';
+
+//added a new action delete_favorite
+export const DELETE_FAVORITE = 'DELETE_FAVORITE';
+
