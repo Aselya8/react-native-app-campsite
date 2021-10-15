@@ -23,6 +23,8 @@ const mapDispatchToProps = {
 function RenderCampsite(props) {
 
     const { campsite } = props;
+    //created Ref
+    const view = React.createRef();
 
     //added const, arrow method as a parameter dx, and ternary operator
     const recognizeDrag = ({ dx }) => (dx < -200) ? true : false;
@@ -30,7 +32,11 @@ function RenderCampsite(props) {
     //added panResponder, API with create method
     const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: () => true,
-        //eventhandler
+        //added new panHendler
+        onPanResponderGrant: () => {
+            view.current.rubberBand(1000)
+                .then(endState => console.log(endState.finished ? 'finished' : 'canceled'));
+        },
         onPanResponderEnd: (e, gestureState) => {
             console.log('pan responder end', gestureState);
             if (recognizeDrag(gestureState)) {
@@ -63,6 +69,7 @@ function RenderCampsite(props) {
                 animation='fadeInDown'
                 duration={2000}
                 delay={1000}
+                ref={view}
                 {...panResponder.panHandlers}>
                 <Card
                     featuredTitle={campsite.name}
