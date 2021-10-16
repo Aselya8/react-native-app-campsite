@@ -29,6 +29,10 @@ function RenderCampsite(props) {
     //added const, arrow method as a parameter dx, and ternary operator
     const recognizeDrag = ({ dx }) => (dx < -200) ? true : false;
 
+    //added a new function
+
+    const recognizeComment = ({ dx }) => (dx > 200 ? true : false);
+
     //added panResponder, API with create method
     const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: () => true,
@@ -38,7 +42,7 @@ function RenderCampsite(props) {
                 .then(endState => console.log(endState.finished ? 'finished' : 'canceled'));
         },
         onPanResponderEnd: (e, gestureState) => {
-            console.log('pan responder end', gestureState);
+            console.log("pan responder end", gestureState);
             if (recognizeDrag(gestureState)) {
                 Alert.alert(
                     'Add Favorite',
@@ -47,20 +51,24 @@ function RenderCampsite(props) {
                         {
                             text: 'Cancel',
                             style: 'cancel',
-                            onPress: () => console.log('Cancel Pressed')
+                            onPress: () => console.log("Cancel Pressed")
                         },
                         {
                             text: 'OK',
                             onPress: () => props.favorite ?
-                                console.log('Already set as a favorite') : props.markFavorite()
+                                console.log("Already set as a favorite") : props.markFavorite()
                         }
                     ],
                     { cancelable: false }
                 );
+            } else if (recognizeComment(gestureState)) {
+                console.log("pan responder end", gestureState);
+                props.onShowModal();
             }
             return true;
-        }
+        },
     });
+
 
 
     if (campsite) {
@@ -83,7 +91,7 @@ function RenderCampsite(props) {
                             raised
                             reverse
                             onPress={() => props.favorite ?
-                                console.log('Already set as a favorite') : props.markFavorite()}
+                                console.log("Already set as a favorite") : props.markFavorite()}
                         />
                         <Icon style={styles.cardItem}
                             name='pencil'
@@ -179,7 +187,7 @@ class CampsiteInfo extends Component {
     }
 
     static navigationOptions = {
-        title: 'Campsite Information'
+        title: "Campsite Information"
     }
 
     render() {
