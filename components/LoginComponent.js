@@ -36,8 +36,9 @@ class Login extends Component {
         }
     }
 
+    //added a lifecycle method componentDidMount
     componentDidMount() {
-        SecureStore.getItemAsync('userinfo')
+        SecureStore.getItemAsync('userinfo')//variable
             .then(userdata => {
                 const userinfo = JSON.parse(userdata);
                 if (userinfo) {
